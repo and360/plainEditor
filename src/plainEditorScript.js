@@ -1,5 +1,5 @@
-import renderPlainEditor from './renderPlainEditor.js';
-import runPlainEditorToolbar from './runPlainEditorToolbar.js';
+import renderPlainEditor from './renderPlainEditor';
+import runPlainEditorToolbar from './runPlainEditorToolbar';
 
 
 

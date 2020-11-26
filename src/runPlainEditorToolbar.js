@@ -1,4 +1,4 @@
-import highLightButtons from './highLightButtons.js';
+import highLightButtons from './highLightButtons';
 
 function runPlainEditorToolbar() {
     class ToolbarElement { 

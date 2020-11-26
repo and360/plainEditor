@@ -1,4 +1,4 @@
-import getHighlightButtons from './getHighlightButtons.js';
+import getHighlightButtons from './getHighlightButtons';
 
 function highLightButtons(arrayOfToolbarElementWithHighlight) {
 
