@@ -1,12 +1,9 @@
 import getHighlightButtons from './getHighlightButtons.js';
 
-// в этом импорте функция, которая после каждого ввода, выделения или клика возвращает объект
-// с параметрами выделенного текста (какие теги вложены, какой шрифт, какой цвет и тд)
-
 function highLightButtons(arrayOfToolbarElementWithHighlight) {
 
     const root = document.querySelector('.editor-textField');
-    const justityButtonsArr = [ //кнопки выравнивания текста, взял их отдельно.
+    const justityButtonsArr = [ 
                                     [document.querySelector('.toolbar-justifyCenter'), 'center'],
                                     [document.querySelector('.toolbar-justifyFull'), 'justify'],
                                     [document.querySelector('.toolbar-justifyLeft'), 'left'],
@@ -16,25 +13,25 @@ function highLightButtons(arrayOfToolbarElementWithHighlight) {
     root.addEventListener('click', toggleSelectedButtons);
     root.addEventListener('keydown', toggleSelectedButtons);
 
-    function toggleSelectedButtons() { // сама функция с подстветкой.
-        const highLight = getHighlightButtons(root); // получаем объект с параметрами.
-        //console.log(highLight);  // можно увидеть что мы получили.
-        const arrayOfHighlightButtons = highLight.tagArr; // массив массивов с тэгами, вложенными во фрагмент.
+    function toggleSelectedButtons() { 
+        const highLight = getHighlightButtons(root); 
+        //console.log(highLight);
+        const arrayOfHighlightButtons = highLight.tagArr; 
 
 
-        function toggleSelectedButton(button, tag) { // если каждый контейнер содержит нужный тэг,
+        function toggleSelectedButton(button, tag) { 
             if(arrayOfHighlightButtons.every(arr => arr.includes(tag))) {
-                button.classList.add('selected'); //  то подсвечиваем,
+                button.classList.add('selected'); 
             } else {
-                button.classList.remove('selected'); // иначе убираем подсветку
+                button.classList.remove('selected'); 
             }
         }
-        arrayOfToolbarElementWithHighlight.forEach(button => { // навешиваем на все элементы массива,
-            toggleSelectedButton(button.element, button.tag); //  в который мы их пи создании поместили.
+        arrayOfToolbarElementWithHighlight.forEach(button => { 
+            toggleSelectedButton(button.element, button.tag); 
         });
 
 
-        justityButtonsArr.forEach(arr => { // тоже подсветка, но я ее сильно упростил.
+        justityButtonsArr.forEach(arr => { 
             toggleSelectedJustifyButton(arr[0], arr[1]);
         });
 
@@ -65,30 +62,30 @@ function highLightButtons(arrayOfToolbarElementWithHighlight) {
 
 
         function toggleSelectedSelectButtons(selectClass, defaultValue, targetArr, setNewValue) {
-// переключать значения элементов select
-            const currentSelect = document.querySelector(`.toolbar-${selectClass}`);// получаем select
-            
-            let currentValue = defaultValue; // текущее значение уснавливаем сначала по дефолту
 
-            if( targetArr && // если массив вообще получен в объекте highLight
-                targetArr.length !== 0 && // и если не пуст
-                targetArr.every(item => item === targetArr[0]) //  то проверим нет ли там разных значений
-                ) { // если нет разных значений размера шрифта или названия шрифта
+            const currentSelect = document.querySelector(`.toolbar-${selectClass}`);
+            
+            let currentValue = defaultValue; 
+
+            if( targetArr && 
+                targetArr.length !== 0 && 
+                targetArr.every(item => item === targetArr[0]) 
+                ) { 
                     const valueStr = targetArr[0],
                         re = /"/g,
-                        newStr = valueStr.replace(re, ''); // то удалим лишние кавычки, кот. иногда добавляются
+                        newStr = valueStr.replace(re, ''); 
                     
                     currentValue = setNewValue(newStr, currentValue, selectClass);
-// и запустим функцию, которая установит эти значения. для разных элементов она будет разная
+
                 } else {       
-                    currentValue = defaultValue; // если что-то не так, ставим значение по дефолту.
+                    currentValue = defaultValue; 
                 } 
                             
-            currentSelect.value = currentValue; // и устанавливаем его в value  элемента.
+            currentSelect.value = currentValue; 
         }
 
 
-        function setValueOfSelect(newStr, currentValue, selectClass) { // для шрифта просто переберем на совпадение
+        function setValueOfSelect(newStr, currentValue, selectClass) { 
 
             const options = document.querySelectorAll(`.${selectClass}-option`);
 
@@ -105,7 +102,7 @@ function highLightButtons(arrayOfToolbarElementWithHighlight) {
 
 
         function setValueOfFontSize(newStr, currentValue) { 
-            // здесь использую свитч, потому что значение размера шрифта это число, а в стиле пишет текст.
+            
             switch(newStr) {
                 case 'x-small':
                     currentValue = 1;
@@ -137,7 +134,7 @@ function highLightButtons(arrayOfToolbarElementWithHighlight) {
 
 
 
-        function setValueOfLineHeightSelect() {// примерно то же самое для селекта с межстрочным интервалом
+        function setValueOfLineHeightSelect() {
             const lineHeight = document.querySelector('.toolbar-lineHeight');
             const ancestorContainer = document.getSelection().getRangeAt(0).commonAncestorContainer;
             
@@ -157,7 +154,7 @@ function highLightButtons(arrayOfToolbarElementWithHighlight) {
 
         toggleSelectedColorButtons('toolbar-foreColor', '#ff0000', highLight.colorArr);
         toggleSelectedColorButtons('toolbar-hiliteColor', '#ffff00', highLight.backgroundColorArr);
-// аналогично с цветом только сначала надо преобразовать значения ргб в 16-ричные
+
         function toggleSelectedColorButtons(selectClass, defaultValue, targetArr) {
 
             function rgbToHex(color) {
@@ -189,7 +186,7 @@ function highLightButtons(arrayOfToolbarElementWithHighlight) {
         }
     }
 
-    arrayOfToolbarElementWithHighlight.forEach(button => { //  тоглим просто на клик по кнопке
+    arrayOfToolbarElementWithHighlight.forEach(button => { 
         button.element.addEventListener('click', () => {
             button.element.classList.toggle('selected');
         });

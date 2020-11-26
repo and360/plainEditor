@@ -1,7 +1,6 @@
 function renderPlainEditor(root) {
 
-    // создаем блок майн и внутри него тулбар и текстовое поле.
-
+    
     const main = document.createElement('div');
     main.classList.add('editor-main');
     root.append(main);
@@ -19,7 +18,6 @@ function renderPlainEditor(root) {
 
 
 
-// toolbarContainer  - это контейнер в котором размещены кнопки по группам.
 
     class ToolbarContainer {
         constructor(htmlClass) {
@@ -35,7 +33,7 @@ function renderPlainEditor(root) {
 
 
 
-// это общий класс для всех кнопок.
+
 
     class ToolbarButton {
         constructor(htmlClass, tooltip, content, parentClass) {
@@ -62,8 +60,6 @@ function renderPlainEditor(root) {
 
 
 
-// это класс кнопок для форматирования текста по ширине.
-// иконки на рисовал спанами с ::before
 
     class ToolbarButtonWithSpanIcon extends ToolbarButton {
         constructor(htmlClass, tooltip, number, parentClass) {
@@ -95,12 +91,11 @@ function renderPlainEditor(root) {
 
     arrayOfJustifyBtns.forEach(item => {
         new ToolbarButtonWithSpanIcon(item[0], item[1], item[2], 'justify-container').createButton();
-    }); // перебором создает 3 иконки, а первая создана просто с символом '☰'.
+    }); 
 
 
 
-
-    new ToolbarContainer('textDecoration-container').createContainer(); //контейнер с кнопками декорирования текста.
+    new ToolbarContainer('textDecoration-container').createContainer(); 
 
     const arrayOftextDecorationBtns = [
                                         ['bold', 'жирный', '<b>B</b>'],
@@ -123,12 +118,11 @@ function renderPlainEditor(root) {
 
     arrayOftextDecorationBtns.forEach(item => {
         new ToolbarButton(item[0], item[1], item[2], 'textDecoration-container').createButton();
-    }); // по аналогии из массива перебором создает кнопки и засовывает в родительский контейнер.
+    }); 
 
 
 
-
-    class ToolbarSelect { // класс для создания элементов select.
+    class ToolbarSelect { 
         constructor(htmlClass, content, selectName, parentClass) {
             this.htmlClass = htmlClass;
             this.content = content;
@@ -137,17 +131,17 @@ function renderPlainEditor(root) {
         }
 
         createSelect() {
-            const select = document.createElement('select'); //создать элемент
+            const select = document.createElement('select'); 
             select.classList.add('toolbar-select', `toolbar-${this.htmlClass}`);
             this.parentContainer.append(select);
 
             const selectName = document.createElement('option');
-            selectName.textContent = this.selectName; // добавить название селекта в качестве первого элемента 'option'
+            selectName.textContent = this.selectName; 
             selectName.setAttribute('selected', 'selected');
             selectName.setAttribute('disabled', 'disabled');
             select.append(selectName);
 
-            this.content.forEach(arr => { // создает остальные options из массива с их значениями 
+            this.content.forEach(arr => { 
                 const option = document.createElement('option');
                 option.setAttribute('value', arr[0]);
                 option.classList.add(`${this.htmlClass}-option`);
@@ -158,9 +152,9 @@ function renderPlainEditor(root) {
         }
     }
 
-    new ToolbarContainer('selectableOptions-container').createContainer(); // контейнер для элементов селект и инпутов.
+    new ToolbarContainer('selectableOptions-container').createContainer(); 
 
-    const fontNameArray = [ // значения options  для селекта со шрифтами.
+    const fontNameArray = [ 
                             ["arial", 'Arial'],
                             ["Courier New", 'Courier New'],
                             ["georgia", 'Georgia'],
@@ -173,19 +167,18 @@ function renderPlainEditor(root) {
     new ToolbarSelect('fontName', fontNameArray, 'Шрифт', 'selectableOptions-container').createSelect();
 
     const fontSizeArray = [[1, '10px'], [2, '12px'], [3, '14px'], [4, '16px'], 
-                        [5, '18px'], [6, '21px'], [7, '26px'],]; // размер шрифта
+                        [5, '18px'], [6, '21px'], [7, '26px'],]; 
 
     new ToolbarSelect('fontSize', fontSizeArray, 'Размер', 'selectableOptions-container').createSelect();
 
     const lineHeightArray = [ [0.5, '0.5'], [0.75, '0.75'], [1, '1'], [1.5, '1.5'], [2, '2'] ];
-    // межстрочный интервал.
+    
 
     new ToolbarSelect('lineHeight', lineHeightArray, 'Интервал', 'selectableOptions-container').createSelect();
     
 
 
 
-//класс для инпутов выбора цвета текста и фона.
 
     class ToolbarInput {
         constructor(htmlClass, inputName, inputType, inputValue, parentClass) {
@@ -214,7 +207,7 @@ function renderPlainEditor(root) {
 
 
 
-    new ToolbarContainer('contextOptions-container').createContainer(); // котейнер для оставшихся кнопок.
+    new ToolbarContainer('contextOptions-container').createContainer();
 
     const arrayOfContextOptions = [
                                     ['selectAll', '', 'Select All'],
@@ -229,7 +222,7 @@ function renderPlainEditor(root) {
 
 
     new ToolbarButtonWithSpanIcon('copy', 'копировать', 2, 'contextOptions-container').createButton();
-    //здесь иконка тоже с помощью спанов и ::before
+
 
     new ToolbarButton('toUpperCase', 'верхний регистр', 'А&#8593;', 'contextOptions-container').createButton();
     new ToolbarButton('toLowerCase', 'нижний регистр', 'а&#8595;', 'contextOptions-container').createButton();

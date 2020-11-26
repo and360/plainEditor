@@ -1,7 +1,7 @@
 import highLightButtons from './highLightButtons.js';
 
 function runPlainEditorToolbar() {
-    class ToolbarElement { // общий класс для всех элементов
+    class ToolbarElement { 
         constructor(htmlClass, command) {
             this.htmlClass = htmlClass;
             this.command = command;
@@ -11,15 +11,15 @@ function runPlainEditorToolbar() {
         addExecCommandForButton() {
             this.element.addEventListener('click', (defaultUI = false, valueArg = null) => {
                 document.execCommand(this.command, defaultUI, valueArg);
-            }); // навесить execCommand, который уже и форматирует выделенный текст в зависимости от команды.
+            }); 
         }
     }
 
 
 
 
-    class ToolbarElementInsertContent extends ToolbarElement { // класс кнопок, где не получилось использовать
-        constructor(htmlClass) {                    //execCommand в лоб.
+    class ToolbarElementInsertContent extends ToolbarElement { 
+        constructor(htmlClass) {
             super(htmlClass);
             this.command = 'insertHTML';
         }
@@ -35,30 +35,30 @@ function runPlainEditorToolbar() {
 
         insertHTML() {
             this.element.addEventListener('click', () => {
-                if(document.getSelection().isCollapsed) { // если выделение схлопнуто вставляем текст через промпт.
+                if(document.getSelection().isCollapsed) { 
                     const insertText = prompt('Введите текст');
                     if(insertText !== null) {
                         document.execCommand('insertHTML', false, `<pre>${insertText}</pre>`); 
                     }
-                } else { // если выделен какой-то текст, то он обернется в <pre></pre>.
+                } else { 
                     document.execCommand(this.command, false, `<pre>${document.getSelection().toString()}</pre>`);
                 } 
             });
         }
 
-        setLineHeight() {// изменить межстрочный интервал.
+        setLineHeight() {
             this.element.addEventListener('input', () => {
                 const ancestorContainer = document.getSelection().getRangeAt(0).commonAncestorContainer;
-                // это родительский контейнер для всего выделения.
-                clearStyleOfDomFragment(ancestorContainer); //очистим инлайн стили вложенных эелементов
+                
+                clearStyleOfDomFragment(ancestorContainer); 
 
                 function clearStyleOfDomFragment(container) {
 
                     if(container.style) {
-                        container.style['line-height'] = ''; // если родитель не #text очистим стиль
+                        container.style['line-height'] = ''; 
                     } 
                     
-                    if(container.children) {// обходит все вложенные элементы и удаляет  их стили.
+                    if(container.children) {
                         const children = Array.from(container.children);
                         //console.log(children);
                         children.forEach(child => {
@@ -67,16 +67,16 @@ function runPlainEditorToolbar() {
                     } 
                 }
                 
-                if(ancestorContainer.style) {// если это не #text установим ему интервал из значения селекта.
+                if(ancestorContainer.style) {
                     ancestorContainer.style['line-height'] = this.element.value;
-                } else if (ancestorContainer.parentElement.style) { // если #text то берем его родителя
+                } else if (ancestorContainer.parentElement.style) { 
                     ancestorContainer.parentElement.style['line-height'] = this.element.value;
-                }   // а если и тот #text, то нихера не установится тогда
+                }   
             });  
         }
     }
 
-    new ToolbarElementInsertContent('.toolbar-picture').insertPicture(); // навесим обработчики на кнопки
+    new ToolbarElementInsertContent('.toolbar-picture').insertPicture(); 
 
     new ToolbarElementInsertContent('.toolbar-insertHTML').insertHTML();
 
@@ -85,7 +85,7 @@ function runPlainEditorToolbar() {
 
 
 
-    class ToolbarElementForToggleCase extends ToolbarElement { // переключать заглавность/строчность.
+    class ToolbarElementForToggleCase extends ToolbarElement { 
         constructor(htmlClass) {
             super(htmlClass);
             this.command = 'insertHTML';
@@ -113,16 +113,16 @@ function runPlainEditorToolbar() {
     class ToolbarElementContext extends ToolbarElement { 
         constructor(htmlClass, command) {
             super(htmlClass, command);
-            arrayOfToolbarElement.push(this); // сразу добавляем в массив, он потом нужен.
+            arrayOfToolbarElement.push(this); 
         }
-    } // все эти кнопки работают тупо от метода execCommand. для каждой просто указываю команду.
+    } 
 
-    const arrayOfToolbarElement = []; //из него потом беру кнопки чтобы навестить подсветку при клике.
+    const arrayOfToolbarElement = []; 
 
     const commandsElementContext = ['undo', 'redo', 'justifyCenter', 'justifyFull', 'justifyLeft', 
     'justifyRight', 'insertHorizontalRule', 'selectAll', 'delete', 'cut', 'copy', 'removeFormat'];
 
-    function createToolbarElement(arr, className) { //навешиваем функционал на все кнопки массива
+    function createToolbarElement(arr, className) { 
         arr.forEach(elem => {
             new className(`.toolbar-${elem}`, elem);
         });
@@ -133,12 +133,12 @@ function runPlainEditorToolbar() {
 
 
 
-    class ToolbarElementWithTag extends ToolbarElement { //кнопки, которые оборачивают фрагмент в тэг
-        constructor(htmlClass, command, tag) { //  тоже работают примитивно.
+    class ToolbarElementWithTag extends ToolbarElement { 
+        constructor(htmlClass, command, tag) { 
             super(htmlClass, command);
             this.tag = tag;
-            arrayOfToolbarElement.push(this); // добавляем в тот же массив.
-            arrayOfToolbarElementWithHighlight.push(this); //  это другой массив для другой подсветки
+            arrayOfToolbarElement.push(this); 
+            arrayOfToolbarElementWithHighlight.push(this); 
         }
     }
 
@@ -166,7 +166,7 @@ function runPlainEditorToolbar() {
 
 
 
-// дальше еще несколько кнопок в двух классах. в принципе по шаблону.
+
 
     class ToolbarElementFormatBlock extends ToolbarElementWithTag {
         constructor(htmlClass, tag) {
@@ -219,7 +219,6 @@ function runPlainEditorToolbar() {
 
 
 
-// это импортированная функция, которая определяет какие кнопки надо подсветить при данном выделении текста
 
     
     highLightButtons(arrayOfToolbarElementWithHighlight);

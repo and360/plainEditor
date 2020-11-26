@@ -1,22 +1,19 @@
 function getHighlightButtons(editorRoot) {
 
-    // эта функция обходит выделенный фрагмент текста поэлементно и собирает в массивы его параметры
-    // все теги, размер и цвет шрифта, цвет бэкграунда
+    let highLight = {};
 
-    let highLight = {}; //  сам объект который мы передадим
-
-    if (!editorRoot.textContent) { //  если в редакторе пусто
+    if (!editorRoot.textContent) {
         highLight.tagArr = ['document-fragment'];
         return highLight;
     }
 
-    const selection = window.getSelection(), // получим выделение
-        getSelection = selection.getRangeAt(0).cloneContents(), // скопируем весь фрагмент
-        children = getSelection.children, //  получим детей, начальный и конечный контейнер выделения.
+    const selection = window.getSelection(), 
+        getSelection = selection.getRangeAt(0).cloneContents(), 
+        children = getSelection.children, 
         startCont = selection.getRangeAt(0).startContainer,
         endCont = selection.getRangeAt(0).endContainer;
 
-    let tagArr = [], // это массивы в которые все засунем и тд
+    let tagArr = [], 
         justifyArr = [],
         fontFamilyArr = [],
         fontSizeArr = [],
@@ -26,7 +23,7 @@ function getHighlightButtons(editorRoot) {
         childArr = [],
         collectionItem;
 
-    function pushToStyleArrays(element) { //  если очередной элемент имеет нужный стиль то пушим его в массив.
+    function pushToStyleArrays(element) { 
         if(element.style['text-align']) {
             justifyArr.push(element.style['text-align']); 
         }
@@ -54,11 +51,11 @@ function getHighlightButtons(editorRoot) {
 
 
     function pushResult(collection) {
-        function pushChildElements(child) { // рекурсивно обходим фрагмент
+        function pushChildElements(child) { 
             if(child.children) {
                 let childItem;
                 for(childItem of child.children) {
-                    childArr.push(childItem.nodeName); // пушим тэг каждого child
+                    childArr.push(childItem.nodeName); 
                     pushToStyleArrays(childItem);
                     pushChildElements(childItem);
                 } 
@@ -69,12 +66,12 @@ function getHighlightButtons(editorRoot) {
             pushToStyleArrays(collectionItem); 
             pushResult(collectionItem.children);
             pushChildElements(collectionItem);
-            tagArr.push(childArr); // пушим в итоговый массив. получим массив массивов
-            childArr = [];  // чистим для следующей итерации
+            tagArr.push(childArr); 
+            childArr = [];  
         }  
     }
 
-    function pushIfStartIsEqualEnd() { //  если выделен маленький кусок.
+    function pushIfStartIsEqualEnd() { 
         let parentElement = startCont.parentElement;
         while(parentElement !== editorRoot) {
             //if(parentElement !== null) { вылетает или виснет при использовании HR. родительская нода=null.
@@ -90,7 +87,7 @@ function getHighlightButtons(editorRoot) {
         childArr = []; 
     }
 
-    if(startCont.isEqualNode(endCont)) { // запускаем все это.
+    if(startCont.isEqualNode(endCont)) { 
         pushIfStartIsEqualEnd();
     } else {  
         childArr.push(startCont.parentElement.nodeName);
@@ -98,7 +95,7 @@ function getHighlightButtons(editorRoot) {
         childArr = [];
         pushResult(children);
     }
-    tagArr = tagArr.filter(item => item.length !== 0); //  удаляем пустые массивы
+    tagArr = tagArr.filter(item => item.length !== 0); 
 
     highLight.tagArr = tagArr;
     highLight.justifyArr = justifyArr;
@@ -106,9 +103,9 @@ function getHighlightButtons(editorRoot) {
     highLight.fontSizeArr = fontSizeArr;
     highLight.lineHeightArr = lineHeightArr;
     highLight.colorArr = colorArr;
-    highLight.backgroundColorArr = backgroundColorArr;  // добавляем все в кучу
+    highLight.backgroundColorArr = backgroundColorArr;  
 
-    return highLight; //  теперь все.
+    return highLight; 
 
 }
 
