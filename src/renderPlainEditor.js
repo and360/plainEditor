@@ -68,7 +68,7 @@ function renderPlainEditor(root) {
             this.number = number;
             this.content = createContent(this.htmlClass, this.number);
             
-            function createContent(htmlClass, number) { // number  - это число линий, которые надо нарисовать.
+            function createContent(htmlClass, number) { 
                 let icon = '';
                 for(let i = 1; i <= number; i++) {
                     const line = `<span class="${htmlClass}-container-${i}"></span>`;
@@ -79,11 +79,10 @@ function renderPlainEditor(root) {
         }
     } 
 
-    new ToolbarContainer('justify-container').createContainer(); // контейнер с кнопками форматирования по ширине.
-
-    new ToolbarButton('justifyCenter', 'по центру', '☰', 'justify-container').createButton();
+    new ToolbarContainer('justify-container').createContainer(); 
 
     const arrayOfJustifyBtns = [
+                                    ['justifyCenter', 'по центру', 3],
                                     ['justifyFull', 'по ширине', 3],
                                     ['justifyLeft', 'по левому краю', 3],
                                     ['justifyRight', 'по правому краю', 3]

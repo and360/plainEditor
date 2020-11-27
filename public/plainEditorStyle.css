@@ -6,21 +6,19 @@ a {
     z-index: 100;
 }
 .editor-main {
-    border: 1px solid black;
-    width: 80%;
-    height: 600px;
     margin: 0 auto;
     padding: 5px;
 }
 .editor-toolbar {
-    border: 1px solid black;
-    margin: 0 auto;
-    padding: 5px;
-    margin-bottom: 5px;
+    box-sizing: border-box;
+    font-size: 12px;
+    margin: 0 0 5px 0;
+    padding: 0 0 5px 0;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     justify-content: left;
+    border-bottom: 1px solid silver;
 }
 
 .toolbar-container {
@@ -30,14 +28,16 @@ a {
     flex-wrap: wrap;
 }
 .editor-textField {
-    border: 1px solid black;
-    margin: 0 auto;
-    padding: 10px;
-    height: 450px;
+    box-sizing: border-box;
     font-size: 20px;
+    margin: 0 auto;
+    height: 450px;
     outline: none;
     overflow: auto;
 }
+
+
+
 
 .toolbar-foreColor,
 .toolbar-hiliteColor {
@@ -48,8 +48,13 @@ a {
     background: inherit;
 }
 .toolbar-select {
-    margin-right: 5px;
+    margin-left: 8px;
+    margin-right: 8px;
 }
+
+
+
+
 .toolbar-btn {
     position: relative;
     width: 30px;
@@ -64,7 +69,7 @@ a {
     outline: none;
     padding-left: 5px;
     padding-right: 5px;
-    margin: 3px;
+    margin-right: 3px;
 }
 .toolbar-btn:hover {
     background: #CACFD2;
@@ -106,6 +111,13 @@ a {
     z-index: 500;
 }
 
+.toolbar-undo,
+.toolbar-redo {
+    font-size: 1.2em;
+}
+
+
+
 
 .toolbar-justifyRight, 
 .toolbar-justifyLeft, 
@@ -122,7 +134,10 @@ a {
 .justifyLeft-container-3,
 .justifyFull-container-1,
 .justifyFull-container-2,
-.justifyFull-container-3 {
+.justifyFull-container-3,
+.justifyCenter-container-1,
+.justifyCenter-container-2,
+.justifyCenter-container-3 {
     box-sizing: border-box;
     position: absolute;
     top: 0;
@@ -135,93 +150,89 @@ a {
     padding: 0 auto;
 }
 
-.justifyRight-container-1:before {
+.justifyRight-container-1:before, 
+.justifyRight-container-2:before, 
+.justifyRight-container-3:before, 
+.justifyLeft-container-1:before, 
+.justifyLeft-container-2:before, 
+.justifyLeft-container-3:before,
+.justifyFull-container-1:before,
+.justifyFull-container-2:before,
+.justifyFull-container-3:before,
+.justifyCenter-container-1:before,
+.justifyCenter-container-2:before,
+.justifyCenter-container-3:before {
     position: absolute;
     content: '';
+    background: black;
+    height: 1px;
+}
+
+.justifyRight-container-1:before {
     top: 30%;
     left: 4px;
     width: 70%;
-    height: 1px;
-    background: black;
 }
 .justifyRight-container-2:before {
-    position: absolute;
-    content: '';
     top: 50%;
     left: 10px;
     width: 50%;
-    height: 1px;
-    background: black;
 }
 .justifyRight-container-3:before {
-    position: absolute;
-    content: '';
     top: 70%;
     left: 16px;
     width: 30%;
-    height: 1px;
-    background: black;
 } 
 
 .justifyLeft-container-1:before {
-    position: absolute;
-    content: '';
     top: 30%;
     left: 4px;
     width: 70%;
-    height: 1px;
-    background: black;
-  }
-  .justifyLeft-container-2:before {
-    position: absolute;
-    content: '';
+}
+.justifyLeft-container-2:before {
     top: 50%;
     left: 4px;
     width: 50%;
-    height: 1px;
-    background: black;
-  }
-  .justifyLeft-container-3:before {
-    position: absolute;
-    content: '';
+}
+.justifyLeft-container-3:before {
     top: 70%;
     left: 4px;
     width: 30%;
-    height: 1px;
-    background: black;
+}
+
+  .justifyFull-container-1:before,
+  .justifyFull-container-2:before,
+  .justifyFull-container-3:before {
+    left: 4px;
+    width: 70%;
+  }
+  .justifyCenter-container-1:before,
+  .justifyCenter-container-2:before,
+  .justifyCenter-container-3:before {
+    left: 8px;
+    width: 45%;
+  }
+  .justifyFull-container-1:before,
+  .justifyCenter-container-1:before {
+    top: 30%;
+  }
+  .justifyFull-container-2:before,
+  .justifyCenter-container-2:before {
+    top: 50%;
+  }
+  .justifyFull-container-3:before,
+  .justifyCenter-container-3:before {
+    top: 70%;
   }
 
-  .justifyFull-container-1:before {
-    position: absolute;
-    content: '';
-    top: 30%;
-    left: 4px;
-    width: 70%;
-    height: 1px;
-    background: black;
+
+
+
+  .toolbar-selectAll,
+  .toolbar-removeFormat {
+      width: 60px;
   }
-  .justifyFull-container-2:before {
-    position: absolute;
-    content: '';
-    top: 50%;
-    left: 4px;
-    width: 70%;
-    height: 1px;
-    background: black;
-  }
-  .justifyFull-container-3:before {
-    position: absolute;
-    content: '';
-    top: 70%;
-    left: 4px;
-    width: 70%;
-    height: 1px;
-    background: black;
-  }
-.toolbar-selectAll,
-.toolbar-removeFormat {
-    width: 80px;
-}
+
 .toolbar-copy {
     position: relative;
 }
@@ -249,15 +260,21 @@ a {
 
 
 
+h1 {
+    font-size: 2em;
+}
+h2 {
+    font-size: 1.5em;
+}
+h3 {
+    font-size: 1.2em;
+}
+
+
 
 
 .selected {
     background-color: #CACFD2;
-}
-
-
-.lineHeight {
-    line-height: 45px;
 }
 
 

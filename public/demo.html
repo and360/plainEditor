@@ -5,18 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="plainEditorStyle.css">
     <script src="./plainEditor.js" type="text/javascript"></script>
-    
-    <title>Plain Editor</title>
+    <title>Demo</title>
+    <style>
+        .demo {
+            border-radius: 10px;
+            margin: 0 auto;
+            box-shadow: 0px 0px 33px -3px rgba(0,0,0,0.75);
+            width: 60%;
+        }
+    </style>
 </head>
 <body>
-    <button class="test">click me!</button>
-    <div class="rt"></div>
+    <div class="demo"></div>
     <script>
-        document.querySelector('.test').addEventListener('click', () => {
-            plainEditorStart(document.body);
-        });
+        plainEditorStart(document.querySelector('.demo'));
     </script>
-    
-    
 </body>
 </html>
