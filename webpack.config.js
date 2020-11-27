@@ -4,6 +4,6 @@ module.exports = {
   entry: './src/plainEditorScript.js', 
   output: {
     path: path.resolve(__dirname, 'public'), 
-    filename: 'plainEditor.js' 
+    filename: 'plainEditor.js'
   }
 };

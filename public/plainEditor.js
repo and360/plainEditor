@@ -1,3 +1,4 @@
+function plainEditorStart(root) {
 /*
  * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
  * This devtool is not neither made for production nor for readable output files.
@@ -47,7 +48,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _renderPlainEditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./renderPlainEditor */ \"./src/renderPlainEditor.js\");\n/* harmony import */ var _runPlainEditorToolbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./runPlainEditorToolbar */ \"./src/runPlainEditorToolbar.js\");\n\r\n\r\n\r\n\r\n\r\n// функция renderPlainEditor создает текстовое (.editor-textField) и \r\n//панель инструментов (.editor-toolbar) в диве, который указан как root.\r\n// внутри тулбара  создаются все кнопки.\r\n\r\n(0,_renderPlainEditor__WEBPACK_IMPORTED_MODULE_0__.default)(document.body);\r\n\r\n// функция runPlainEditorToolbar  навешивает обработчики на все кнопки тулбара.\r\n// обработчики создают сами функции форматирования, а также позволяют подсвечивать\r\n// активные кнопки. К примеру, \"В\" когда выделен полужирный текст \r\n//или название шрифта и размер выделенного куска.\r\n\r\n(0,_runPlainEditorToolbar__WEBPACK_IMPORTED_MODULE_1__.default)();\r\n\n\n//# sourceURL=webpack://plaineditor/./src/plainEditorScript.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _renderPlainEditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./renderPlainEditor */ \"./src/renderPlainEditor.js\");\n/* harmony import */ var _runPlainEditorToolbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./runPlainEditorToolbar */ \"./src/runPlainEditorToolbar.js\");\n\r\n\r\n\r\n\r\n(0,_renderPlainEditor__WEBPACK_IMPORTED_MODULE_0__.default)(root);\r\n(0,_runPlainEditorToolbar__WEBPACK_IMPORTED_MODULE_1__.default)();\r\n\r\n\r\n\n\n//# sourceURL=webpack://plaineditor/./src/plainEditorScript.js?");
 
 /***/ }),
 
@@ -140,3 +141,4 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	// This entry module used 'exports' so it can't be inlined
 /******/ })()
 ;
+}

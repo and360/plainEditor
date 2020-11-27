@@ -2,7 +2,7 @@
   "name": "plaineditor",
   "version": "1.0.0",
   "description": "simple text editor",
-  "main": "plainEditorScript.js",
+  "main": "plainEditor.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack"
